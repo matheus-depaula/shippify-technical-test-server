@@ -1,0 +1,12 @@
+# DIRECTORIES
+node_modules
+build
+
+# PACKAGE MANAGER
+yarn.lock
+package-lock.json
+yarn-debug.log*
+yarn-error.log*
+
+# ENVIRONMENT
+.env
