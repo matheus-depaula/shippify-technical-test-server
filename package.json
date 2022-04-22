@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start:dev": "ts-node src/main.ts"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
@@ -12,7 +15,7 @@
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.3.0",
     "tsoa": "^3.14.1",
-    "typeorm": "^0.3.6"
+    "typeorm": "0.2.41"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
