@@ -3,6 +3,7 @@ node_modules
 build
 .vscode/*
 !.vscode/*.code-snippets
+!.vscode/launch.json
 
 # PACKAGE MANAGER
 yarn.lock

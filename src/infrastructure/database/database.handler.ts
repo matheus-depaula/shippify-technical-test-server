@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { container } from '../configurations/container';
 import { DatabaseConnection } from './database-connection';
 

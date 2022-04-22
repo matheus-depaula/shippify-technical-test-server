@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { Connection, createConnection } from 'typeorm';
-import DatabaseConnectionOptions from './database-connection-options';
+import { DatabaseConnectionOptions } from './database-connection-options';
 
 @injectable()
 export class DatabaseConnection {

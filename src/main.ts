@@ -1,9 +1,5 @@
-import { apiHandler } from './api/api.handler';
-import { databaseHandler } from './infrastructure/database/database.handler';
+import 'reflect-metadata';
+import { container } from './infrastructure/configurations/container';
+import { MainHandler } from './main.handler';
 
-const start = async () => {
-  await databaseHandler();
-  await apiHandler();
-};
-
-start();
+container.get(MainHandler).start();
