@@ -8,9 +8,9 @@
       "",
       "@injectable()",
       "export class ${1:Name}Middleware implements IMiddleware {",
-      "\tpublic configure(app: Express) {",
-      "\t\tapp.use();",
-      "\t}",
+      "  public configure(app: Express) {",
+      "    app.use();",
+      "  }",
       "}",
       ""
     ]

@@ -1,0 +1,21 @@
+{
+  "New TypeORM Entity": {
+    "prefix": "orm-entity",
+    "body": [
+      "import { Entity } from 'typeorm';",
+      "import { ExtendableEntity, IExtendableEntity } from './extendable.entity';",
+      "",
+      "@Entity()",
+      "export class ${1:EntityName} extends ExtendableEntity {",
+      "  constructor(data: IExtendableEntity) {",
+      "    super(data);",
+      "  }",
+      "",
+      "  public static create({ id, creationDate, ...props }: ${1:EntityName}): ${1:EntityName} {",
+      "    return new ${1:EntityName}({ id, creation_date: creationDate, ...props });",
+      "  }",
+      "}",
+      ""
+    ]
+  }
+}
