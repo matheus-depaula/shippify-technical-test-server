@@ -12,8 +12,7 @@ import { IMiddleware } from './middleware.interface';
 export class ErrorMiddleware implements IMiddleware {
   public configure(app: Express) {
     app.use((error: unknown, _req: Request, res: Response<ErrorResult | ValidationErrorResult>, next: NextFunction): Response | void => {
-      console.log('oi');
-      console.log('ERROR:', (error as any).message);
+      console.log('ERROR:', error);
 
       if (error instanceof ValidateError) {
         return res.status(HttpClientErrorStatusCode.BAD_REQUEST).json({
