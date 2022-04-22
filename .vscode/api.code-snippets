@@ -14,5 +14,33 @@
       "}",
       ""
     ]
+  },
+  "New Controller": {
+    "prefix": "tsoa-controller",
+    "body": [
+      "import { injectable } from 'inversify';",
+      "import { Controller, Route, Tags } from 'tsoa';",
+      "",
+      "@injectable()",
+      "@Tags('${1:EntityName}')",
+      "@Route('${2:route}')",
+      "export class ${1:EntityName}Controller extends Controller {",
+      "  ",
+      "}",
+      ""
+    ]
+  },
+  "New Get Controller": {
+    "prefix": "tsoa-controller-get",
+    "body": [
+      "/**",
+      " * @summary Description",
+      " */",
+      "@Get()",
+      "@Response<SuccessResult>(HttpSuccessStatusCode.SUCCESS)",
+      "public async ${1:method}(): Promise<${2:response}> {",
+      "",
+      "}"
+    ]
   }
 }

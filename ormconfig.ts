@@ -6,7 +6,7 @@ module.exports = {
   password: process.env.DATABASE_PASS,
   database: process.env.DATABASE_NAME,
   logging: false,
-  entities: ['src/domain/entities/*.ts'],
+  entities: ['src/domain/entities/*.entity.ts'],
   migrations: ['src/infrastructure/database/migrations/*.ts'],
   cli: {
     entitiesDir: 'src/domain/entities',

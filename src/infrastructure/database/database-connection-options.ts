@@ -1,4 +1,7 @@
 import { inject, injectable } from 'inversify';
+import { Company } from '../../domain/entities/company.entity';
+import { Driver } from '../../domain/entities/driver.entity';
+import { Vehicle } from '../../domain/entities/vehicle.entity';
 import { Settings } from '../configurations/settings';
 
 @injectable()
@@ -24,6 +27,6 @@ export class DatabaseConnectionOptions {
     this.synchronize = false;
     this.migrations = ['src/infrastructure/database/migrations/*.ts'];
     this.cli = { entitiesDir: 'src/domain/entities', migrationsDir: 'src/infrastructure/database/migrations' };
-    this.entities = [];
+    this.entities = [Company, Driver, Vehicle];
   }
 }

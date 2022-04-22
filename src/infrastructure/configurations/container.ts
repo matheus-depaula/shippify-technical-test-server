@@ -1,3 +1,4 @@
+import * as Types from './types';
 import { Container, decorate, injectable } from 'inversify';
 import { Controller } from 'tsoa';
 import { Settings } from './settings';
@@ -10,27 +11,38 @@ import { HealthCheckController } from '../../api/http-server/controllers/health-
 import { SwaggerMiddleware } from '../../api/http-server/middlewares/swagger.middleware';
 import { MainHandler } from '../../main.handler';
 import { ErrorMiddleware } from '../../api/http-server/middlewares/error.middleware';
+import { CompanyController } from '../../api/http-server/controllers/company.controller';
+import { Mediator } from '../../application/mediator';
+import { CreateCompanyHandler } from '../../application/company/create-company/create-company.handler';
 
 const container: Container = new Container();
 
 decorate(injectable(), Controller);
 
 // ENTRY POINT
-container.bind(MainHandler).toSelf();
+container.bind(MainHandler).toSelf().inSingletonScope();
 
 // INFRASTRUCTURE
-container.bind(Settings).toSelf();
-container.bind(DatabaseConnection).toSelf();
-container.bind(DatabaseConnectionOptions).toSelf();
+container.bind(Types.Container).toConstantValue(container);
+container.bind(Settings).toSelf().inSingletonScope();
+container.bind(DatabaseConnection).toSelf().inSingletonScope();
+container.bind(DatabaseConnectionOptions).toSelf().inSingletonScope();
+
+// APPLICATION
+container.bind(Types.Mediator).to(Mediator);
+
+// HANDLERS
+container.bind(Types.CreateCompanyHandler).to(CreateCompanyHandler);
 
 // API
-container.bind(HttpServer).toSelf();
-container.bind(CorsMiddleware).toSelf();
-container.bind(ErrorMiddleware).toSelf();
-container.bind(SwaggerMiddleware).toSelf();
-container.bind(BodyParserMiddleware).toSelf();
+container.bind(HttpServer).toSelf().inSingletonScope();
+container.bind(CorsMiddleware).toSelf().inSingletonScope();
+container.bind(ErrorMiddleware).toSelf().inSingletonScope();
+container.bind(SwaggerMiddleware).toSelf().inSingletonScope();
+container.bind(BodyParserMiddleware).toSelf().inSingletonScope();
 
 // CONTROLLERS
-container.bind(HealthCheckController).toSelf();
+container.bind(HealthCheckController).toSelf().inSingletonScope();
+container.bind(CompanyController).toSelf().inSingletonScope();
 
 export { container, container as iocContainer };

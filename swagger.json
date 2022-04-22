@@ -6,6 +6,18 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"ErrorResult": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"HttpSuccessStatusCode": {
 				"enum": [
 					200,
@@ -29,18 +41,6 @@
 				],
 				"type": "object",
 				"additionalProperties": false
-			},
-			"ErrorResult": {
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -55,6 +55,40 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/company": {
+			"get": {
+				"operationId": "CreateCompany",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"201": {
+						"description": ""
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResult"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Creates a new Company",
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/api/health-check": {
 			"get": {
 				"operationId": "HealthCheck",
