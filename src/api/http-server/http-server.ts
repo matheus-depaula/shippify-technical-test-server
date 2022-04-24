@@ -23,15 +23,15 @@ export class HttpServer {
     const app = express();
     const port = this.settings.getServerPort();
 
-    this.configureMiddlewares(app);
+    this.setupMiddlewares(app);
 
     app.listen(port, () => console.log(`HTTP SERVER ### - Running at port ${port}`));
   }
 
-  private configureMiddlewares(app: Express) {
-    this.corsMiddleware.configure(app);
-    this.errorMiddleware.configure(app);
-    this.swaggerMiddleware.configure(app);
+  private async setupMiddlewares(app: Express) {
     this.bodyParserMiddleware.configure(app);
+    this.corsMiddleware.configure(app);
+    this.swaggerMiddleware.configure(app);
+    this.errorMiddleware.configure(app);
   }
 }

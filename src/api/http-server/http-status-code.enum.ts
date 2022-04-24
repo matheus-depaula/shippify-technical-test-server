@@ -12,3 +12,5 @@ export enum HttpClientErrorStatusCode {
 export enum HttpServerErrorStatusCode {
   INTERNAL_SERVER_ERROR = 500,
 }
+
+export type HttpStatusCode = HttpSuccessStatusCode | HttpClientErrorStatusCode | HttpServerErrorStatusCode;

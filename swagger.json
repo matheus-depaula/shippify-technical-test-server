@@ -6,7 +6,7 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"ErrorResult": {
+			"IErrorMessage": {
 				"properties": {
 					"message": {
 						"type": "string"
@@ -18,6 +18,28 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"EEntityStatus": {
+				"enum": [
+					"ACTIVE",
+					"DISABLED"
+				],
+				"type": "string"
+			},
+			"ECompanyPlanType": {
+				"enum": [
+					"BASIC",
+					"INTERMEDIATE",
+					"ADVANCED"
+				],
+				"type": "string"
+			},
+			"EOrderType": {
+				"enum": [
+					"DESC",
+					"ASC"
+				],
+				"type": "string"
+			},
 			"HttpSuccessStatusCode": {
 				"enum": [
 					200,
@@ -25,6 +47,161 @@
 					204
 				],
 				"type": "number"
+			},
+			"HttpClientErrorStatusCode": {
+				"enum": [
+					400,
+					404
+				],
+				"type": "number"
+			},
+			"HttpServerErrorStatusCode": {
+				"enum": [
+					500
+				],
+				"type": "number"
+			},
+			"HttpStatusCode": {
+				"anyOf": [
+					{
+						"$ref": "#/components/schemas/HttpSuccessStatusCode"
+					},
+					{
+						"$ref": "#/components/schemas/HttpClientErrorStatusCode"
+					},
+					{
+						"$ref": "#/components/schemas/HttpServerErrorStatusCode"
+					}
+				]
+			},
+			"CreatedResult": {
+				"properties": {
+					"data": {},
+					"message": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/HttpSuccessStatusCode"
+					}
+				},
+				"required": [
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateCompanyDto": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"city": {
+						"type": "number",
+						"format": "double"
+					},
+					"planType": {
+						"$ref": "#/components/schemas/ECompanyPlanType"
+					}
+				},
+				"required": [
+					"name",
+					"city",
+					"planType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"NoContentResult": {
+				"properties": {
+					"data": {},
+					"message": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/HttpSuccessStatusCode"
+					}
+				},
+				"required": [
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_UpdateCompanyDto.Exclude_keyofUpdateCompanyDto.id__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"city": {
+						"type": "number",
+						"format": "double"
+					},
+					"plan_type": {
+						"$ref": "#/components/schemas/ECompanyPlanType"
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_UpdateCompanyDto.id_": {
+				"$ref": "#/components/schemas/Pick_UpdateCompanyDto.Exclude_keyofUpdateCompanyDto.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"CreateDriverDto": {
+				"properties": {
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"avatar_url": {
+						"type": "string"
+					},
+					"companyId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"first_name",
+					"last_name",
+					"email",
+					"companyId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_UpdateDriverDto.Exclude_keyofUpdateDriverDto.id__": {
+				"properties": {
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_UpdateDriverDto.id_": {
+				"$ref": "#/components/schemas/Pick_UpdateDriverDto.Exclude_keyofUpdateDriverDto.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
 			},
 			"SuccessResult": {
 				"properties": {
@@ -41,6 +218,68 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"EVehicleType": {
+				"enum": [
+					0,
+					1,
+					2
+				],
+				"type": "number"
+			},
+			"CreateVehicleDto": {
+				"properties": {
+					"plate": {
+						"type": "string"
+					},
+					"model": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/EVehicleType"
+					},
+					"capacity": {
+						"type": "string"
+					},
+					"driverId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"plate",
+					"model",
+					"type",
+					"driverId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_UpdateVehicleDto.Exclude_keyofUpdateVehicleDto.id__": {
+				"properties": {
+					"plate": {
+						"type": "string"
+					},
+					"model": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/EVehicleType"
+					},
+					"capacity": {
+						"type": "string"
+					},
+					"driverId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_UpdateVehicleDto.id_": {
+				"$ref": "#/components/schemas/Pick_UpdateVehicleDto.Exclude_keyofUpdateVehicleDto.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
 			}
 		},
 		"securitySchemes": {}
@@ -57,6 +296,114 @@
 	"paths": {
 		"/company": {
 			"get": {
+				"operationId": "ListCompanies",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "List companies",
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "city",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EEntityStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "planType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/ECompanyPlanType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "take",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "skip",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EOrderType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "activeOnly",
+						"required": false,
+						"schema": {
+							"default": true,
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"post": {
 				"operationId": "CreateCompany",
 				"responses": {
 					"200": {
@@ -68,6 +415,194 @@
 						}
 					},
 					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreatedResult"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Creates a new company",
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCompanyDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/company/{id}": {
+			"get": {
+				"operationId": "GetCompanyById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Find company by id",
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "activeOnly",
+						"required": false,
+						"schema": {
+							"default": true,
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateCompany",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContentResult"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Updates a company by it's id",
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_UpdateCompanyDto.id_"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DisableCompany",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"204": {
 						"description": ""
 					},
 					"400": {
@@ -75,18 +610,430 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ErrorResult"
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
 								}
 							}
 						}
 					}
 				},
-				"summary": "Creates a new Company",
+				"summary": "Disable a company by it's id",
 				"tags": [
 					"Company"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/driver": {
+			"get": {
+				"operationId": "ListDrivers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "List drivers",
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "firstNme",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "lastName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EEntityStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyCity",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyStatus",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EEntityStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyPlanType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/ECompanyPlanType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "take",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "skip",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EOrderType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "activeOnly",
+						"required": false,
+						"schema": {
+							"default": true,
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateDriver",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreatedResult"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Creates a new driver",
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateDriverDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/driver/{id}": {
+			"get": {
+				"operationId": "GetDriverById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Find driver by id",
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "company",
+						"required": false,
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "activeOnly",
+						"required": false,
+						"schema": {
+							"default": true,
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateDriver",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContentResult"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Updates a driver by it's id",
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_UpdateDriverDto.id_"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DisableDriver",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"204": {
+						"description": ""
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Disable a driver by it's id",
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/health-check": {
@@ -108,7 +1055,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ErrorResult"
+									"$ref": "#/components/schemas/IErrorMessage"
 								}
 							}
 						}
@@ -120,6 +1067,464 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/vehicle": {
+			"get": {
+				"operationId": "ListVehicles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "List vehicles",
+				"tags": [
+					"Vehicle"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "plate",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "model",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EVehicleType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "capacity",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EEntityStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "driverId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "driverFirstName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "driverLastName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "driverEmail",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "driverStatus",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EEntityStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyCity",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyStatus",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EEntityStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "companyPlanType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/ECompanyPlanType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "take",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "skip",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EOrderType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "activeOnly",
+						"required": false,
+						"schema": {
+							"default": true,
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateVehicle",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreatedResult"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Creates a new vehicle",
+				"tags": [
+					"Vehicle"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVehicleDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vehicle/{id}": {
+			"get": {
+				"operationId": "GetVehicleById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Find vehicle by id",
+				"tags": [
+					"Vehicle"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "driver",
+						"required": false,
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "company",
+						"required": false,
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "activeOnly",
+						"required": false,
+						"schema": {
+							"default": true,
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateVehicle",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContentResult"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Updates a vehicle by it's id",
+				"tags": [
+					"Vehicle"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_UpdateVehicleDto.id_"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DisableVehicle",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"204": {
+						"description": ""
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorMessage"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Disable a vehicle by it's id",
+				"tags": [
+					"Vehicle"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		}
 	},

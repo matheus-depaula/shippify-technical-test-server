@@ -5,14 +5,18 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { CompanyController } from './../controllers/company.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { DriverController } from './../controllers/driver.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HealthCheckController } from './../controllers/health-check.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { VehicleController } from './../controllers/vehicle.controller';
 import { iocContainer } from './../../../infrastructure/configurations/container';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "ErrorResult": {
+    "IErrorMessage": {
         "dataType": "refObject",
         "properties": {
             "message": { "dataType": "string", "required": true },
@@ -20,9 +24,102 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EEntityStatus": {
+        "dataType": "refEnum",
+        "enums": ["ACTIVE", "DISABLED"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ECompanyPlanType": {
+        "dataType": "refEnum",
+        "enums": ["BASIC", "INTERMEDIATE", "ADVANCED"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EOrderType": {
+        "dataType": "refEnum",
+        "enums": ["DESC", "ASC"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "HttpSuccessStatusCode": {
         "dataType": "refEnum",
         "enums": [200, 201, 204],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HttpClientErrorStatusCode": {
+        "dataType": "refEnum",
+        "enums": [400, 404],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HttpServerErrorStatusCode": {
+        "dataType": "refEnum",
+        "enums": [500],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HttpStatusCode": {
+        "dataType": "refAlias",
+        "type": { "dataType": "union", "subSchemas": [{ "ref": "HttpSuccessStatusCode" }, { "ref": "HttpClientErrorStatusCode" }, { "ref": "HttpServerErrorStatusCode" }], "validators": {} },
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreatedResult": {
+        "dataType": "refObject",
+        "properties": {
+            "data": { "dataType": "any" },
+            "message": { "dataType": "string" },
+            "status": { "ref": "HttpSuccessStatusCode", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreateCompanyDto": {
+        "dataType": "refObject",
+        "properties": {
+            "name": { "dataType": "string", "required": true },
+            "city": { "dataType": "double", "required": true },
+            "planType": { "ref": "ECompanyPlanType", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "NoContentResult": {
+        "dataType": "refObject",
+        "properties": {
+            "data": { "dataType": "any" },
+            "message": { "dataType": "string" },
+            "status": { "ref": "HttpSuccessStatusCode", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_UpdateCompanyDto.Exclude_keyofUpdateCompanyDto.id__": {
+        "dataType": "refAlias",
+        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "name": { "dataType": "string" }, "city": { "dataType": "double" }, "plan_type": { "ref": "ECompanyPlanType" } }, "validators": {} },
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_UpdateCompanyDto.id_": {
+        "dataType": "refAlias",
+        "type": { "ref": "Pick_UpdateCompanyDto.Exclude_keyofUpdateCompanyDto.id__", "validators": {} },
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreateDriverDto": {
+        "dataType": "refObject",
+        "properties": {
+            "first_name": { "dataType": "string", "required": true },
+            "last_name": { "dataType": "string", "required": true },
+            "email": { "dataType": "string", "required": true },
+            "phone": { "dataType": "string" },
+            "avatar_url": { "dataType": "string" },
+            "companyId": { "dataType": "double", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_UpdateDriverDto.Exclude_keyofUpdateDriverDto.id__": {
+        "dataType": "refAlias",
+        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "firstName": { "dataType": "string" }, "lastName": { "dataType": "string" }, "email": { "dataType": "string" }, "phone": { "dataType": "string" }, "avatar": { "dataType": "string" } }, "validators": {} },
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_UpdateDriverDto.id_": {
+        "dataType": "refAlias",
+        "type": { "ref": "Pick_UpdateDriverDto.Exclude_keyofUpdateDriverDto.id__", "validators": {} },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SuccessResult": {
@@ -33,6 +130,33 @@ const models: TsoaRoute.Models = {
             "status": { "ref": "HttpSuccessStatusCode", "required": true },
         },
         "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EVehicleType": {
+        "dataType": "refEnum",
+        "enums": [0, 1, 2],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreateVehicleDto": {
+        "dataType": "refObject",
+        "properties": {
+            "plate": { "dataType": "string", "required": true },
+            "model": { "dataType": "string", "required": true },
+            "type": { "ref": "EVehicleType", "required": true },
+            "capacity": { "dataType": "string" },
+            "driverId": { "dataType": "double", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_UpdateVehicleDto.Exclude_keyofUpdateVehicleDto.id__": {
+        "dataType": "refAlias",
+        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "plate": { "dataType": "string" }, "model": { "dataType": "string" }, "type": { "ref": "EVehicleType" }, "capacity": { "dataType": "string" }, "driverId": { "dataType": "double" } }, "validators": {} },
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_UpdateVehicleDto.id_": {
+        "dataType": "refAlias",
+        "type": { "ref": "Pick_UpdateVehicleDto.Exclude_keyofUpdateVehicleDto.id__", "validators": {} },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -48,6 +172,65 @@ export function RegisterRoutes(app: express.Express) {
     app.get('/company',
         function(request: any, response: any, next: any) {
             const args = {
+                city: { "in": "query", "name": "city", "dataType": "double" },
+                status: { "default": "ACTIVE", "in": "query", "name": "status", "ref": "EEntityStatus" },
+                planType: { "in": "query", "name": "planType", "ref": "ECompanyPlanType" },
+                take: { "in": "query", "name": "take", "dataType": "double" },
+                skip: { "in": "query", "name": "skip", "dataType": "double" },
+                orderBy: { "in": "query", "name": "orderBy", "dataType": "string" },
+                orderType: { "in": "query", "name": "orderType", "ref": "EOrderType" },
+                activeOnly: { "default": true, "in": "query", "name": "activeOnly", "dataType": "boolean" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<CompanyController>(CompanyController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.listCompanies.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/company/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+                activeOnly: { "default": true, "in": "query", "name": "activeOnly", "dataType": "boolean" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<CompanyController>(CompanyController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getCompanyById.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/company',
+        function(request: any, response: any, next: any) {
+            const args = {
+                body: { "in": "body", "name": "body", "required": true, "ref": "CreateCompanyDto" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -66,6 +249,196 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.createCompany.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.put('/company/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+                body: { "in": "body", "name": "body", "required": true, "ref": "Omit_UpdateCompanyDto.id_" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<CompanyController>(CompanyController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.updateCompany.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.delete('/company/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<CompanyController>(CompanyController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.disableCompany.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/driver',
+        function(request: any, response: any, next: any) {
+            const args = {
+                firstNme: { "in": "query", "name": "firstNme", "dataType": "string" },
+                lastName: { "in": "query", "name": "lastName", "dataType": "string" },
+                status: { "default": "ACTIVE", "in": "query", "name": "status", "ref": "EEntityStatus" },
+                companyId: { "in": "query", "name": "companyId", "dataType": "double" },
+                companyCity: { "in": "query", "name": "companyCity", "dataType": "double" },
+                companyStatus: { "default": "ACTIVE", "in": "query", "name": "companyStatus", "ref": "EEntityStatus" },
+                companyPlanType: { "in": "query", "name": "companyPlanType", "ref": "ECompanyPlanType" },
+                take: { "in": "query", "name": "take", "dataType": "double" },
+                skip: { "in": "query", "name": "skip", "dataType": "double" },
+                orderBy: { "in": "query", "name": "orderBy", "dataType": "string" },
+                orderType: { "in": "query", "name": "orderType", "ref": "EOrderType" },
+                activeOnly: { "default": true, "in": "query", "name": "activeOnly", "dataType": "boolean" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<DriverController>(DriverController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.listDrivers.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/driver/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+                company: { "default": false, "in": "query", "name": "company", "dataType": "boolean" },
+                activeOnly: { "default": true, "in": "query", "name": "activeOnly", "dataType": "boolean" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<DriverController>(DriverController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getDriverById.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/driver',
+        function(request: any, response: any, next: any) {
+            const args = {
+                body: { "in": "body", "name": "body", "required": true, "ref": "CreateDriverDto" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<DriverController>(DriverController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.createDriver.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.put('/driver/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+                body: { "in": "body", "name": "body", "required": true, "ref": "Omit_UpdateDriverDto.id_" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<DriverController>(DriverController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.updateDriver.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.delete('/driver/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<DriverController>(DriverController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.disableDriver.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -90,6 +463,153 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.healthCheck.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/vehicle',
+        function(request: any, response: any, next: any) {
+            const args = {
+                plate: { "in": "query", "name": "plate", "dataType": "string" },
+                model: { "in": "query", "name": "model", "dataType": "string" },
+                type: { "in": "query", "name": "type", "ref": "EVehicleType" },
+                capacity: { "in": "query", "name": "capacity", "dataType": "string" },
+                status: { "default": "ACTIVE", "in": "query", "name": "status", "ref": "EEntityStatus" },
+                driverId: { "in": "query", "name": "driverId", "dataType": "double" },
+                driverFirstName: { "in": "query", "name": "driverFirstName", "dataType": "string" },
+                driverLastName: { "in": "query", "name": "driverLastName", "dataType": "string" },
+                driverEmail: { "in": "query", "name": "driverEmail", "dataType": "string" },
+                driverStatus: { "default": "ACTIVE", "in": "query", "name": "driverStatus", "ref": "EEntityStatus" },
+                companyId: { "in": "query", "name": "companyId", "dataType": "double" },
+                companyCity: { "in": "query", "name": "companyCity", "dataType": "double" },
+                companyStatus: { "default": "ACTIVE", "in": "query", "name": "companyStatus", "ref": "EEntityStatus" },
+                companyPlanType: { "in": "query", "name": "companyPlanType", "ref": "ECompanyPlanType" },
+                take: { "in": "query", "name": "take", "dataType": "double" },
+                skip: { "in": "query", "name": "skip", "dataType": "double" },
+                orderBy: { "in": "query", "name": "orderBy", "dataType": "string" },
+                orderType: { "in": "query", "name": "orderType", "ref": "EOrderType" },
+                activeOnly: { "default": true, "in": "query", "name": "activeOnly", "dataType": "boolean" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<VehicleController>(VehicleController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.listVehicles.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/vehicle/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+                driver: { "default": false, "in": "query", "name": "driver", "dataType": "boolean" },
+                company: { "default": false, "in": "query", "name": "company", "dataType": "boolean" },
+                activeOnly: { "default": true, "in": "query", "name": "activeOnly", "dataType": "boolean" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<VehicleController>(VehicleController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getVehicleById.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/vehicle',
+        function(request: any, response: any, next: any) {
+            const args = {
+                body: { "in": "body", "name": "body", "required": true, "ref": "CreateVehicleDto" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<VehicleController>(VehicleController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.createVehicle.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.put('/vehicle/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+                body: { "in": "body", "name": "body", "required": true, "ref": "Omit_UpdateVehicleDto.id_" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<VehicleController>(VehicleController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.updateVehicle.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.delete('/vehicle/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "double" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<VehicleController>(VehicleController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.disableVehicle.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

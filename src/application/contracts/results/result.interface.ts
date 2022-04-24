@@ -1,7 +1,7 @@
-import { HttpSuccessStatusCode } from '../../../api/http-server/http-status-code.enum';
+import { HttpStatusCode } from '../../../api/http-server/http-status-code.enum';
 
-export interface Result<T = undefined> {
+export interface IResult<T = unknown> {
   data?: T;
   message?: string;
-  status: HttpSuccessStatusCode;
+  status?: HttpStatusCode;
 }

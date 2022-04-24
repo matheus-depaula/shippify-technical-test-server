@@ -1,12 +1,14 @@
 import { HttpSuccessStatusCode } from '../../../api/http-server/http-status-code.enum';
-import { Result } from './result.interface';
+import { IResult } from './result.interface';
 
-export class SuccessResult<T = unknown> implements Result<T> {
+export class SuccessResult<T = any> implements IResult<T> {
   public data?: T;
   public message?: string;
   public status!: HttpSuccessStatusCode;
 
-  constructor(result: SuccessResult<T>) {
-    Object.assign(this, result);
+  constructor(data: Omit<SuccessResult<T>, 'status'>) {
+    this.data = data?.data;
+    this.message = data?.message;
+    this.status = HttpSuccessStatusCode.SUCCESS;
   }
 }

@@ -1,27 +1,19 @@
-import { CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
-
-export interface IExtendableEntity {
-  id?: number;
-  creation_date: Date;
-}
+import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { EEntityStatus } from '../enums/entity-status.enum';
 
 export class ExtendableEntity {
-  @PrimaryGeneratedColumn('increment', { name: 'id' })
-  private readonly _id?: number;
+  @PrimaryGeneratedColumn('increment')
+  public id?: number;
 
-  @CreateDateColumn({ name: 'creation_date' })
-  private readonly _creation_date!: Date;
+  @Column('simple-enum', { enum: EEntityStatus, default: EEntityStatus.ACTIVE })
+  public status!: EEntityStatus;
 
-  constructor(data: IExtendableEntity) {
-    this._id = data?.id;
-    this._creation_date = data?.creation_date;
-  }
+  @CreateDateColumn()
+  public creation_date?: Date;
 
-  get id(): number | undefined {
-    return this._id;
-  }
-
-  get creationDate(): Date {
-    return this._creation_date;
+  constructor(data?: ExtendableEntity) {
+    this.id = data?.id;
+    this.status = data?.status ?? EEntityStatus.ACTIVE;
+    this.creation_date = data?.creation_date;
   }
 }

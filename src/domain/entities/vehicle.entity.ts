@@ -1,71 +1,42 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { ExtendableEntity, IExtendableEntity } from './extendable.entity';
+import { ExtendableEntity } from './extendable.entity';
 import { EVehicleType } from '../enums/vehicle-type.enum';
 import { Driver } from './driver.entity';
+import { EEntityStatus } from '../enums/entity-status.enum';
 
-@Entity()
+@Entity({ name: 'vehicles' })
 export class Vehicle extends ExtendableEntity {
-  @Column({ length: 100, name: 'plate', unique: true })
-  private _plate!: string;
+  @Column({ length: 100, unique: true })
+  public plate!: string;
 
-  @Column({ length: 100, name: 'model' })
-  private _model!: string;
+  @Column({ length: 100 })
+  public model!: string;
 
-  @Column('simple-enum', { name: 'type', enum: EVehicleType })
-  private _type!: EVehicleType;
+  @Column('simple-enum', { enum: EVehicleType })
+  public type!: EVehicleType;
 
-  @Column({ length: 20, name: 'capacity' })
-  private _capacity!: string;
+  @Column({ length: 20 })
+  public capacity!: string;
 
   @ManyToOne(_type => Driver, driver => driver.vehicles)
   @JoinColumn({ name: 'driver_id' })
-  private _driver!: Driver;
+  public driver?: Driver;
 
-  constructor(data: IExtendableEntity) {
+  constructor(data?: Vehicle) {
     super(data);
   }
 
-  public static create({ id, creationDate, ...props }: Vehicle): Vehicle {
-    return new Vehicle({ id, creation_date: creationDate, ...props });
+  public update(plate?: string, model?: string, type?: EVehicleType, capacity?: string, driver?: Driver): Vehicle {
+    if (plate) this.plate = plate;
+    if (model) this.model = model;
+    if (type) this.type = type;
+    if (capacity) this.capacity = capacity;
+    if (driver) this.driver = driver;
+
+    return this;
   }
 
-  get plate(): string {
-    return this._plate;
-  }
-
-  set plate(_plate: string) {
-    this._plate = _plate;
-  }
-
-  get model(): string {
-    return this._model;
-  }
-
-  set model(_model: string) {
-    this._model = _model;
-  }
-
-  get type(): EVehicleType {
-    return this._type;
-  }
-
-  set type(_type: EVehicleType) {
-    this._type = _type;
-  }
-
-  get capacity(): string {
-    return this._capacity;
-  }
-
-  set capacity(_capacity: string) {
-    this._capacity = _capacity;
-  }
-
-  get driver(): Driver {
-    return this._driver;
-  }
-
-  set driver(_driver: Driver) {
-    this._driver = _driver;
+  public disable() {
+    this.status = EEntityStatus.DISABLED;
   }
 }
