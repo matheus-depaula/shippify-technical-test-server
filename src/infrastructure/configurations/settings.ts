@@ -2,8 +2,14 @@ import 'dotenv/config';
 import { injectable } from 'inversify';
 import { castNumber } from '../../helpers/cast-number';
 
+type Environment = 'production' | 'development';
+
 @injectable()
 export class Settings {
+  public getNodeEnv(): Environment {
+    return this.assertAndReturnEnvironmentSetting('NODE_ENV');
+  }
+
   public getServerPort(): number {
     return this.assertAndReturnNumberSetting('SERVER_PORT');
   }
@@ -41,6 +47,22 @@ export class Settings {
     const setting = castNumber(rawSetting);
 
     if (!setting) throw new Error(this.errorMessage(settingName));
+
+    return setting;
+  }
+
+  private assertAndReturnEnvironmentSetting(settingName: string): Environment {
+    const setting = this.returnSetting(settingName);
+
+    if (!setting) throw new Error(this.errorMessage(settingName));
+
+    if (setting !== 'production' && setting !== 'development') {
+      const message = `${settingName} invalid value. Must be 'development' or 'production'`;
+
+      console.log(message);
+
+      throw new Error(message);
+    }
 
     return setting;
   }

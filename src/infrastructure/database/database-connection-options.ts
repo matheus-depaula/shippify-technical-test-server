@@ -25,7 +25,7 @@ export class DatabaseConnectionOptions {
     this.username = settings.getDatabaseUser();
     this.password = settings.getDatabasePassword();
     this.synchronize = false;
-    this.migrations = ['src/infrastructure/database/migrations/*.ts'];
+    this.migrations = [`src/infrastructure/database/migrations/*.${settings.getNodeEnv() === 'development' ? 'ts' : 'js'}`];
     this.cli = { entitiesDir: 'src/domain/entities', migrationsDir: 'src/infrastructure/database/migrations' };
     this.entities = [Company, Driver, Vehicle];
   }

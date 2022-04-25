@@ -1,0 +1,1 @@
+ALTER TABLE vehicles ADD status enum ('ACTIVE', 'DISABLED') NOT NULL DEFAULT 'ACTIVE';
