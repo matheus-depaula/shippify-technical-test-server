@@ -149,10 +149,10 @@
 			},
 			"CreateDriverDto": {
 				"properties": {
-					"first_name": {
+					"firstName": {
 						"type": "string"
 					},
-					"last_name": {
+					"lastName": {
 						"type": "string"
 					},
 					"email": {
@@ -161,7 +161,7 @@
 					"phone": {
 						"type": "string"
 					},
-					"avatar_url": {
+					"avatarUrl": {
 						"type": "string"
 					},
 					"companyId": {
@@ -170,9 +170,10 @@
 					}
 				},
 				"required": [
-					"first_name",
-					"last_name",
+					"firstName",
+					"lastName",
 					"email",
+					"phone",
 					"companyId"
 				],
 				"type": "object",
@@ -192,7 +193,7 @@
 					"phone": {
 						"type": "string"
 					},
-					"avatar": {
+					"avatarUrl": {
 						"type": "string"
 					}
 				},
@@ -221,11 +222,11 @@
 			},
 			"EVehicleType": {
 				"enum": [
-					0,
-					1,
-					2
+					"CAR",
+					"MOTORCYCLE",
+					"TRUCK"
 				],
-				"type": "number"
+				"type": "string"
 			},
 			"CreateVehicleDto": {
 				"properties": {
@@ -333,6 +334,14 @@
 				],
 				"security": [],
 				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"in": "query",
 						"name": "city",
@@ -685,7 +694,7 @@
 				"parameters": [
 					{
 						"in": "query",
-						"name": "firstNme",
+						"name": "firstName",
 						"required": false,
 						"schema": {
 							"type": "string"
@@ -694,6 +703,14 @@
 					{
 						"in": "query",
 						"name": "lastName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "email",
 						"required": false,
 						"schema": {
 							"type": "string"

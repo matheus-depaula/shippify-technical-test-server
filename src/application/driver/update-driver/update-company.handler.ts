@@ -26,7 +26,7 @@ export class UpdateDriverHandler implements DtoHandler<UpdateDriverDto> {
       if (emailRegistered) return new BadRequestResult('Email already registered');
     }
 
-    driver.update(dto.firstName, dto.lastName, dto.email, dto.phone, dto.avatar);
+    driver.update(dto.firstName, dto.lastName, dto.email, dto.phone, dto.avatarUrl);
 
     await this.driverRepository.save({ ...driver, ...dto });
 

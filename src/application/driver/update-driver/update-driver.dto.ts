@@ -4,7 +4,7 @@ export class UpdateDriverDto {
   public lastName?: string;
   public email?: string;
   public phone?: string;
-  public avatar?: string;
+  public avatarUrl?: string;
 
   constructor(dto: UpdateDriverDto) {
     Object.assign(this, dto);

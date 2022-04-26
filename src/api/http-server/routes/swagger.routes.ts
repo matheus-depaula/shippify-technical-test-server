@@ -102,11 +102,11 @@ const models: TsoaRoute.Models = {
     "CreateDriverDto": {
         "dataType": "refObject",
         "properties": {
-            "first_name": { "dataType": "string", "required": true },
-            "last_name": { "dataType": "string", "required": true },
+            "firstName": { "dataType": "string", "required": true },
+            "lastName": { "dataType": "string", "required": true },
             "email": { "dataType": "string", "required": true },
-            "phone": { "dataType": "string" },
-            "avatar_url": { "dataType": "string" },
+            "phone": { "dataType": "string", "required": true },
+            "avatarUrl": { "dataType": "string" },
             "companyId": { "dataType": "double", "required": true },
         },
         "additionalProperties": false,
@@ -114,7 +114,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_UpdateDriverDto.Exclude_keyofUpdateDriverDto.id__": {
         "dataType": "refAlias",
-        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "firstName": { "dataType": "string" }, "lastName": { "dataType": "string" }, "email": { "dataType": "string" }, "phone": { "dataType": "string" }, "avatar": { "dataType": "string" } }, "validators": {} },
+        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "firstName": { "dataType": "string" }, "lastName": { "dataType": "string" }, "email": { "dataType": "string" }, "phone": { "dataType": "string" }, "avatarUrl": { "dataType": "string" } }, "validators": {} },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Omit_UpdateDriverDto.id_": {
@@ -134,7 +134,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "EVehicleType": {
         "dataType": "refEnum",
-        "enums": [0, 1, 2],
+        "enums": ["CAR", "MOTORCYCLE", "TRUCK"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CreateVehicleDto": {
@@ -172,6 +172,7 @@ export function RegisterRoutes(app: express.Express) {
     app.get('/company',
         function(request: any, response: any, next: any) {
             const args = {
+                name: { "in": "query", "name": "name", "dataType": "string" },
                 city: { "in": "query", "name": "city", "dataType": "double" },
                 status: { "default": "ACTIVE", "in": "query", "name": "status", "ref": "EEntityStatus" },
                 planType: { "in": "query", "name": "planType", "ref": "ECompanyPlanType" },
@@ -306,8 +307,9 @@ export function RegisterRoutes(app: express.Express) {
     app.get('/driver',
         function(request: any, response: any, next: any) {
             const args = {
-                firstNme: { "in": "query", "name": "firstNme", "dataType": "string" },
+                firstName: { "in": "query", "name": "firstName", "dataType": "string" },
                 lastName: { "in": "query", "name": "lastName", "dataType": "string" },
+                email: { "in": "query", "name": "email", "dataType": "string" },
                 status: { "default": "ACTIVE", "in": "query", "name": "status", "ref": "EEntityStatus" },
                 companyId: { "in": "query", "name": "companyId", "dataType": "double" },
                 companyCity: { "in": "query", "name": "companyCity", "dataType": "double" },

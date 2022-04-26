@@ -23,7 +23,13 @@ export class CreateDriverHandler implements DtoHandler<CreateDriverDto> {
 
     if (!company) return new BadRequestResult('Company not exists');
 
-    await this.driverRepository.save({ ...dto, company });
+    await this.driverRepository.save({
+      ...dto,
+      first_name: dto.firstName,
+      last_name: dto.lastName,
+      avatar_url: dto.avatarUrl,
+      company,
+    });
 
     return new CreatedResult();
   }

@@ -25,8 +25,9 @@ export class DriverController extends ExtendableController {
   @Response<IErrorMessage>(HttpClientErrorStatusCode.BAD_REQUEST)
   @Response<IErrorMessage>(HttpServerErrorStatusCode.INTERNAL_SERVER_ERROR)
   public async listDrivers(
-    @Query() firstNme?: string,
+    @Query() firstName?: string,
     @Query() lastName?: string,
+    @Query() email?: string,
     @Query() status: EEntityStatus = EEntityStatus.ACTIVE,
     @Query() companyId?: number,
     @Query() companyCity?: number,
@@ -40,8 +41,9 @@ export class DriverController extends ExtendableController {
   ) {
     const dto = new ListDriversDto({
       where: {
-        first_name: firstNme,
+        first_name: firstName,
         last_name: lastName,
+        email,
         status: activeOnly ? EEntityStatus.ACTIVE : status,
         company: {
           id: companyId,

@@ -18,8 +18,8 @@ export class Driver extends ExtendableEntity {
   @Column({ length: 20 })
   public phone!: string;
 
-  @Column({ length: 200 })
-  public avatar_url!: string;
+  @Column({ length: 200, nullable: true })
+  public avatar_url?: string;
 
   @ManyToOne(_type => Company, company => company.drivers)
   @JoinColumn({ name: 'company_id' })

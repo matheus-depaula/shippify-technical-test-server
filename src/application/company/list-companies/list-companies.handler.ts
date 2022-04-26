@@ -13,6 +13,7 @@ export class ListCompaniesHandler implements DtoHandler<ListCompaniesDto> {
   public async handle(dto: ListCompaniesDto): Promise<Result<Company[]>> {
     const where = { ...dto.where };
 
+    if (!where.name) delete where.name;
     if (!where.city) delete where.city;
     if (!where.plan_type) delete where.plan_type;
     if (!where.status) delete where.status;

@@ -25,6 +25,7 @@ export class CompanyController extends ExtendableController {
   @Response<IErrorMessage>(HttpClientErrorStatusCode.BAD_REQUEST)
   @Response<IErrorMessage>(HttpServerErrorStatusCode.INTERNAL_SERVER_ERROR)
   public async listCompanies(
+    @Query() name?: string,
     @Query() city?: number,
     @Query() status: EEntityStatus = EEntityStatus.ACTIVE,
     @Query() planType?: ECompanyPlanType,
@@ -35,7 +36,7 @@ export class CompanyController extends ExtendableController {
     @Query() activeOnly: boolean = true
   ) {
     const dto = new ListCompaniesDto({
-      where: { city, status: activeOnly ? EEntityStatus.ACTIVE : status, plan_type: planType },
+      where: { name, city, status: activeOnly ? EEntityStatus.ACTIVE : status, plan_type: planType },
       filter: { take, skip, orderBy, orderType },
     });
     const mediatorResult = await this.mediator.send(dto);
