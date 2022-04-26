@@ -1,7 +1,7 @@
 CREATE TABLE vehicles (
     id int NOT NULL AUTO_INCREMENT,
     creation_date datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    plate varchar(100) NOT NULL
+    plate varchar(100) NOT NULL,
     model varchar(100) NOT NULL,
     type enum ('0', '1', '2') NOT NULL,
     capacity varchar(20) NOT NULL,
